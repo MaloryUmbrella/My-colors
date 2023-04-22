@@ -1,5 +1,11 @@
 @import "https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css";
 
+:root {
+  --background-gray: #282c34;
+  --button-dark: #363636;
+  background-color: var(--background-gray);
+}
+
 .App {
   text-align: center;
 }
@@ -47,9 +53,84 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: #FFF;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.row, .colors {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  margin: 0;
+}
+
+.input {
+  font-size: 1.1em;
+  margin-top: 1.4em;
+  font-family: 'Quicksand', helvetica, arial, sans-serif;
+  font-weight: normal;
+  margin-bottom: 10px;
+  line-height: 1.1;
+  color: var(--background-gray);
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+}
+
+.color_tools {
+  padding-right: 0.5em;
+  padding-bottom: 0.2em;
+  float: left;
+  width: 100%;
+  color: #efefef;
+}
+
+.color_tools .input {
+  float: left;
+  margin-right: 0.5em;
+}
+
+.color {
+  cursor: pointer;
+  width: 100%;
+  padding-top: 75%;
+  background-color: #000;
+  transition: padding-top 0.5s;
+  position: relative;
+  overflow: hidden;
+}
+
+.color_wrapper {
+  padding: 0;
+  width: 20%;
+  float: left;
+}
+
+.col-md-15 {
+  position: relative;
+  padding-right: 1em;
+  padding-left: 0;
+}
+
+#main_wrapper {
+  padding-left: 0.5rem;
+  padding-top: 20.5%;
+  height: 2.6em;
+  overflow: visible;
+  position: relative;
+  margin-top: 4em;
+  margin-bottom: 3em;
+  font: normal 1em 'Quicksand', helvetica, arial, sans-serif;
 }

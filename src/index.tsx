@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
-import Main from './components/main'
+import ColorPalette from './components/color_palette'
 import "./index.css"
 
 const JSXRouter = createBrowserRouter(
   createRoutesFromElements(
     <Route>
-        <Route path='/' element={<Main />}> </Route>
+      <Route path='/' element={<ColorPalette />}> </Route>
     </Route>
   )
 );
