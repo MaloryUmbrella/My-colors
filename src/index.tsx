@@ -7,7 +7,7 @@ import "./index.css"
 const JSXRouter = createBrowserRouter(
   createRoutesFromElements(
     <Route>
-        <Route path='/' element={Main()}> </Route>
+        <Route path='/' element={<Main />}> </Route>
     </Route>
   )
 );
