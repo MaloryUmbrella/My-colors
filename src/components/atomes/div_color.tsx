@@ -1,8 +1,5 @@
 import React from 'react';
-
-interface Props {
-    color: string;
-}
+import { Props } from '../interfaces';
 
 const DivColor = ( props: Props ) => {
     let colorWithoutHash = (color: string): string => {
@@ -15,13 +12,31 @@ const DivColor = ( props: Props ) => {
         }
     }
 
+    let changeColor = (color: string, div: number) => {
+        if (color.length < 6) {
+            return
+        }
+
+        let divColor = document.getElementById(`div${div}`);
+
+        if (color.length === 6) {
+            color = "#" + color;
+            divColor?.style.setProperty("background-color", color);
+        }
+        else if (color.startsWith("#") && color.length === 7) {
+            divColor?.style.setProperty("background-color", color);
+        }
+    }
+
+    let key = parseInt(String(props.id));
+
     return (
-        <div className="col-md-15 color_wrapper">
-			<div className="color" style={{ backgroundColor: props.color }} data-id="0" data-color={props.color}>
+        <div className="col-md-15 color_wrapper" key={key}>
+			<div className="color" style={{ backgroundColor: props.color }} id={`div${props.id}`} key={key + 1} data-color={props.color}>
                 <div className="swipe"> </div>
             </div>
 			<div className="color_tools">
-				<input className="input" type="text" defaultValue={colorWithoutHash(props.color)} />
+				<input className="input" type="text" defaultValue={colorWithoutHash(props.color)} key={key + 2} onChange={(element) => changeColor(element.target.value, props.id)} />
 			</div>
 		</div>
     )

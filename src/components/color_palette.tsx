@@ -1,24 +1,28 @@
-import React from 'react';
-import DivColor from './atomes/div_color';
+import React, { useState } from 'react';
+import DivRows from './atomes/div_rows'
 
 const ColorPalette = () => {
+    const [colors, setColors] = useState(["#339c35"]);
+
+    const handleState = () => {
+        let new_color = [];
+
+        for (let color of colors) {
+            new_color.push(color);
+        }
+
+        new_color.push("#000000");
+
+        setColors(new_color);
+    };
+
     return (
         <>
             <div id="main_wrapper">
-                <div className="row colors" id="colors">
-			        <DivColor color={"#339c35"} />
-
-			        <DivColor color={"#c2cd52"} />
-			        
-					<DivColor color={"#ecc39c"} />
-			        
-					<DivColor color={"#cc7833"} />
-			        
-					<DivColor color={"#880b0a"} />
-		        </div>
+                <DivRows colors={colors} />
             </div>
         </>
-  );
+    );
 };
 
 export default ColorPalette;
