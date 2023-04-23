@@ -1,8 +1,7 @@
 import React from 'react';
-import { Props } from '../interfaces';
 
-const DivColor = ( props: Props ) => {
-    let colorWithoutHash = (color: string): string => {
+const DivColor = ( props ) => {
+    let colorWithoutHash = (color) => {
         if (color.includes('#')) {
             let new_color = color.substring(1,color.length);
             return new_color;
@@ -12,7 +11,7 @@ const DivColor = ( props: Props ) => {
         }
     }
 
-    let changeColor = (color: string, div: number) => {
+    let changeColor = (color, div) => {
         if (color.length < 6) {
             return
         }
