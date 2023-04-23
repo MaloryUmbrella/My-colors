@@ -5,5 +5,6 @@ export interface Props {
 }
 
 export interface Colors {
-    colors: string[]
+    colors: string[];
+    event: Function;
 }

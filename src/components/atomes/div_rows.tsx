@@ -12,12 +12,13 @@ const DivRows = (colors: Colors) => {
             <div className="row colors" id="colors">
                 {
 		            colors.colors.map((color) => {
+                        console.log(color);
                         i += 1;
                         key += 3;
                         return <DivColor color={color} id={i} key={key}/>;
                     })
                 }
-                <DivAdd />
+                <DivAdd colors={ colors.colors } event={ colors.event }/>
 		    </div>
         </>
     )

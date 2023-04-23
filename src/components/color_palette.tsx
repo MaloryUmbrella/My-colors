@@ -1,25 +1,26 @@
 import React, { useState } from 'react';
-import DivRows from './atomes/div_rows'
+import DivRows from './atomes/div_rows';
 
 const ColorPalette = () => {
-    const [colors, setColors] = useState(["#339c35"]);
+    let [colors, setColors] = useState<string[]>([]);
+    //setColors(["#339c35"]);
 
-    const handleState = () => {
-        let new_color = [];
+    async function addPalette() {
+        let new_colors = colors;
 
-        for (let color of colors) {
-            new_color.push(color);
-        }
+        new_colors.push("#000000");
 
-        new_color.push("#000000");
+        setColors(new_colors);
 
-        setColors(new_color);
-    };
+        console.log(colors);
+    }
+
+    console.log(colors);
 
     return (
         <>
             <div id="main_wrapper">
-                <DivRows colors={colors} />
+                <DivRows colors={colors} event={addPalette}/>
             </div>
         </>
     );
