@@ -2,21 +2,21 @@ import React from 'react';
 import DivColor from './div_color';
 import DivAdd from './div_add';
 
-const DivRows = (props) => {
+let DivRows = (props) => {
     let i = 0;
-    let key = -3;
+    let ids = 99;
 
     return (
         <>
             <div className="row colors" id="colors">
                 {
-		              props.colors.map((color) => {
-                    i += 1;
-                    key += 3;
-                    return <DivColor color={color} id={i} key={key}/>;
-                  })
+		            props.colors.map((color) => {
+                        i += 1;
+                        ids += 1;
+                        return <DivColor color={color} id={i} ids={ids} state={props.state}/>;
+                    })
                 }
-                <DivAdd event={ props.event }/>
+                <DivAdd event={props.event} />
 		    </div>
         </>
     )

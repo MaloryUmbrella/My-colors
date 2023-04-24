@@ -141,3 +141,37 @@ code {
   top: calc(50% - 13px);
   left: calc(50% - 3px);
 }
+
+.btn-circle {
+  display: inline-block;
+  width: 2em;
+  height: 2em;
+  position: relative;
+  margin-right: 0.5em;
+  background-position: 50%;
+  text-align: center;
+  padding: 0;
+  line-height: 2em;
+  border-radius: 1em;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.btn {
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.trashcan {
+  background-position: 50%;
+  background-size: 1.2em;
+  margin-right: 0.1em;
+}
