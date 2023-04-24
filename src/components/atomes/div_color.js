@@ -1,7 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faLockOpen, faLock, faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { deletePalette, lockPalette, unlockPalette, rgbToHex, isFirst, isMiddle, isLast } from '../functions';
+import { deletePalette, lockPalette, unlockPalette, rgbToHex, isFirst, isMiddle, isLast, onNextPalette, onPreviousPalette } from '../functions';
 
 class DivColor extends React.Component {
     constructor(props) {
@@ -82,6 +82,30 @@ class DivColor extends React.Component {
 	    		    </div>
                 </div>
                 <div className="icons">
+                    {
+                        [
+                            isFirst(this.props.id - 1) === true ? (
+                                <div className="btn btn-circle">
+                                    <FontAwesomeIcon icon={faChevronRight} size="lg" onClick={() => onNextPalette(this.props.state, this.props.id, this.props.ids)}/>
+                                </div>
+                            ): null,
+                            isMiddle(this.props.state, this.props.id - 1) === true ? (
+                                <>
+                                    <div className="btn btn-circle">
+                                        <FontAwesomeIcon icon={faChevronRight} size="lg" onClick={() => onNextPalette(this.props.state, this.props.id, this.props.ids)}/>
+                                    </div>
+                                    <div className="btn btn-circle">
+                                        <FontAwesomeIcon icon={faChevronLeft} size="lg" onClick={() => onPreviousPalette(this.props.state, this.props.id, this.props.ids)}/>
+                                    </div>
+                                </>
+                            ): null,
+                            isLast(this.props.state, this.props.id -1) === true ? (
+                                <div className="btn btn-circle">
+                                    <FontAwesomeIcon icon={faChevronLeft} size="lg" onClick={() => onPreviousPalette(this.props.state, this.props.id, this.props.ids)}/>
+                                </div>
+                            ): null
+                        ]
+                    }
                     <div className="btn btn-circle">
                         {
                             [
@@ -97,30 +121,6 @@ class DivColor extends React.Component {
                     <div className="btn btn-circle trashcan">
                         <FontAwesomeIcon icon={faTrash} color="#DE2121" size="lg" onClick={() => deletePalette(this.props.state, this, this.props.id, this.props.ids)}/>
                     </div>
-                    {
-                        [
-                            isFirst(this.props.id - 1) === true ? (
-                                <div className="btn btn-circle">
-                                    <FontAwesomeIcon icon={faChevronRight} size="lg" />
-                                </div>
-                            ): null,
-                            isMiddle(this.props.state, this.props.id - 1) === true ? (
-                                <>
-                                    <div className="btn btn-circle">
-                                        <FontAwesomeIcon icon={faChevronRight} size="lg" />
-                                    </div>
-                                    <div className="btn btn-circle">
-                                        <FontAwesomeIcon icon={faChevronLeft} size="lg" />
-                                    </div>
-                                </>
-                            ): null,
-                            isLast(this.props.state, this.props.id -1) === true ? (
-                                <div className="btn btn-circle">
-                                    <FontAwesomeIcon icon={faChevronLeft} size="lg" />
-                                </div>
-                            ): null
-                        ]
-                    }
                 </div>
 	    	</div>
         )

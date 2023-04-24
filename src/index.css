@@ -177,6 +177,8 @@ code {
 }
 
 .icons {
+  width: 150px;
+  height: 10px;
   position: relative;
   top: -12px;
 }
