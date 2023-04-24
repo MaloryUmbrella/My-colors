@@ -1,7 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faLockOpen, faLock } from '@fortawesome/free-solid-svg-icons';
-import { deletePalette, lockPalette, unlockPalette, rgbToHex } from '../functions';
+import { faTrash, faLockOpen, faLock, faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { deletePalette, lockPalette, unlockPalette, rgbToHex, isFirst, isMiddle, isLast } from '../functions';
 
 class DivColor extends React.Component {
     constructor(props) {
@@ -60,6 +60,8 @@ class DivColor extends React.Component {
             color_to_hex = "000000";
         }
 
+        color_to_hex = color_to_hex.toUpperCase();
+
         navigator.clipboard.writeText(color_to_hex).then(function() {
                 alert("La couleur a bien été copiée dans le presse papier");
             }, function() {
@@ -79,7 +81,7 @@ class DivColor extends React.Component {
 	    		    	<input className="input" type="text" id={`input${this.props.ids}`} defaultValue={this.colorWithoutHash(this.props.color)} onChange={(element) => this.changeColor(element.target.value, this.props.id, this.props.state)} />
 	    		    </div>
                 </div>
-                <div>
+                <div className="icons">
                     <div className="btn btn-circle">
                         {
                             [
@@ -95,6 +97,30 @@ class DivColor extends React.Component {
                     <div className="btn btn-circle trashcan">
                         <FontAwesomeIcon icon={faTrash} color="#DE2121" size="lg" onClick={() => deletePalette(this.props.state, this, this.props.id, this.props.ids)}/>
                     </div>
+                    {
+                        [
+                            isFirst(this.props.id - 1) === true ? (
+                                <div className="btn btn-circle">
+                                    <FontAwesomeIcon icon={faChevronRight} size="lg" />
+                                </div>
+                            ): null,
+                            isMiddle(this.props.state, this.props.id - 1) === true ? (
+                                <>
+                                    <div className="btn btn-circle">
+                                        <FontAwesomeIcon icon={faChevronRight} size="lg" />
+                                    </div>
+                                    <div className="btn btn-circle">
+                                        <FontAwesomeIcon icon={faChevronLeft} size="lg" />
+                                    </div>
+                                </>
+                            ): null,
+                            isLast(this.props.state, this.props.id -1) === true ? (
+                                <div className="btn btn-circle">
+                                    <FontAwesomeIcon icon={faChevronLeft} size="lg" />
+                                </div>
+                            ): null
+                        ]
+                    }
                 </div>
 	    	</div>
         )

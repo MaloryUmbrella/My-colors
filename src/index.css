@@ -175,3 +175,8 @@ code {
   background-size: 1.2em;
   margin-right: 0.1em;
 }
+
+.icons {
+  position: relative;
+  top: -12px;
+}

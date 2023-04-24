@@ -63,3 +63,30 @@ export function lockPalette(props) {
 export function unlockPalette(props) {
   props.setState({locked: false});
 }
+
+export function isFirst(i) {
+  if (i === 0) {
+    return true;
+  }
+  else {
+    return false;
+  }
+}
+
+export function isMiddle(props, i) {
+  if ( (i > 0) && (i < (props.state.colors.length - 1)) && (props.state.colors.length >= 3) ) {
+    return true;
+  }
+  else {
+    return false;
+  }
+}
+
+export function isLast(props, i) {
+  if ( (i === props.state.colors.length - 1) && (props.state.colors.length >= 2) ) {
+    return true;
+  }
+  else {
+    return false;
+  }
+}
