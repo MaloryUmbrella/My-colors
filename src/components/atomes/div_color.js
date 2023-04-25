@@ -84,24 +84,24 @@ class DivColor extends React.Component {
                 <div className="icons">
                     {
                         [
-                            isFirst(this.props.id - 1) === true ? (
+                            isFirst(this.props.state, this.props.id - 1) === true ? (
                                 <div className="btn btn-circle">
-                                    <FontAwesomeIcon icon={faChevronRight} size="lg" onClick={() => onNextPalette(this.props.state, this.props.id, this.props.ids)}/>
+                                    <FontAwesomeIcon icon={faChevronRight} size="lg" onClick={() => onNextPalette(this.props.state, this, this.props.id, this.props.ids)}/>
                                 </div>
                             ): null,
                             isMiddle(this.props.state, this.props.id - 1) === true ? (
                                 <>
                                     <div className="btn btn-circle">
-                                        <FontAwesomeIcon icon={faChevronRight} size="lg" onClick={() => onNextPalette(this.props.state, this.props.id, this.props.ids)}/>
+                                        <FontAwesomeIcon icon={faChevronRight} size="lg" onClick={() => onNextPalette(this.props.state, this, this.props.id, this.props.ids, this)}/>
                                     </div>
                                     <div className="btn btn-circle">
-                                        <FontAwesomeIcon icon={faChevronLeft} size="lg" onClick={() => onPreviousPalette(this.props.state, this.props.id, this.props.ids)}/>
+                                        <FontAwesomeIcon icon={faChevronLeft} size="lg" onClick={() => onPreviousPalette(this.props.state, this, this.props.id, this.props.ids)}/>
                                     </div>
                                 </>
                             ): null,
                             isLast(this.props.state, this.props.id -1) === true ? (
                                 <div className="btn btn-circle">
-                                    <FontAwesomeIcon icon={faChevronLeft} size="lg" onClick={() => onPreviousPalette(this.props.state, this.props.id, this.props.ids)}/>
+                                    <FontAwesomeIcon icon={faChevronLeft} size="lg" onClick={() => onPreviousPalette(this.props.state, this, this.props.id, this.props.ids)}/>
                                 </div>
                             ): null
                         ]
@@ -110,10 +110,10 @@ class DivColor extends React.Component {
                         {
                             [
                                 this.state.locked === true ? (
-                                    <FontAwesomeIcon icon={faLock} color="#B9B9B9" size="lg" onClick={() => unlockPalette(this)}/>
+                                    <FontAwesomeIcon icon={faLock} color="#B9B9B9" id={`icon${this.props.iconId}`} size="lg" onClick={() => unlockPalette(this)}/>
                                 ): null,
                                 this.state.locked === false ? (
-                                    <FontAwesomeIcon icon={faLockOpen} color="#B9B9B9" size="lg" onClick={() => lockPalette(this)}/>
+                                    <FontAwesomeIcon icon={faLockOpen} color="#B9B9B9" id={`icon${this.props.iconId}`} size="lg" onClick={() => lockPalette(this)}/>
                                 ): null
                             ]
                         }

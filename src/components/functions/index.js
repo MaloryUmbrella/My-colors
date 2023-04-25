@@ -66,8 +66,8 @@ export function unlockPalette(props) {
   props.setState({locked: false});
 }
 
-export function isFirst(i) {
-  if (i === 0) {
+export function isFirst(props, i) {
+  if ((i === 0) && (props.state.colors.length > 1)) {
     return true;
   }
   else {
@@ -93,50 +93,74 @@ export function isLast(props, i) {
   }
 }
 
-export function onNextPalette(props, i, ids) {
-  let colors = props.state.colors;
-  let new_colors = colors[i - 1];
-  let old_colors = colors[i];
+export function onNextPalette(props, props2, i, ids) {
+  if (props2.state.locked) {
+    alert("Pensez à déverouiller votre palette pour pouvoir la déplacer");
+  }
+  else {
+    let statePreviousLock = document.getElementById(`icon${props2.props.iconId + 1}`);
+    
+    if (statePreviousLock.getAttribute("data-icon") === "lock") {
+      alert("Pensez à déverouiller la palette de droite pour pouvoir déplacer la palette actuelle");
+    }
+    else {
+      let colors = props.state.colors;
+      let new_colors = colors[i - 1];
+      let old_colors = colors[i];
 
-  colors.splice(i - 1, 1, old_colors);
-  colors.splice(i, 1, new_colors);
+      colors.splice(i - 1, 1, old_colors);
+      colors.splice(i, 1, new_colors);
 
-  let nextDivColor = document.getElementById("div" + (i + 1));
-  let nextInputColorDisplay = document.getElementById("input" + (ids + 1));
-  let previousDivColor = document.getElementById("div" + i);
-  let previousInputColorDisplay = document.getElementById("input" + ids);
+      let nextDivColor = document.getElementById("div" + (i + 1));
+      let nextInputColorDisplay = document.getElementById("input" + (ids + 1));
+      let previousDivColor = document.getElementById("div" + i);
+      let previousInputColorDisplay = document.getElementById("input" + ids);
 
-  let backgroundColor = previousDivColor.style.backgroundColor;
+      let backgroundColor = previousDivColor.style.backgroundColor;
 
-  nextInputColorDisplay.value = rgbToHex(parseInt(backgroundColor.substring(4,backgroundColor.indexOf(","))), parseInt(backgroundColor.substring(backgroundColor.indexOf(",") + 2, backgroundColor.lastIndexOf(","))), parseInt(backgroundColor.substring(backgroundColor.lastIndexOf(",") + 2, backgroundColor.length - 1)), true);
+      nextInputColorDisplay.value = rgbToHex(parseInt(backgroundColor.substring(4,backgroundColor.indexOf(","))), parseInt(backgroundColor.substring(backgroundColor.indexOf(",") + 2, backgroundColor.lastIndexOf(","))), parseInt(backgroundColor.substring(backgroundColor.lastIndexOf(",") + 2, backgroundColor.length - 1)), true);
 
-  backgroundColor = nextDivColor.style.backgroundColor;
+      backgroundColor = nextDivColor.style.backgroundColor;
 
-  previousInputColorDisplay.value = rgbToHex(parseInt(backgroundColor.substring(4,backgroundColor.indexOf(","))), parseInt(backgroundColor.substring(backgroundColor.indexOf(",") + 2, backgroundColor.lastIndexOf(","))), parseInt(backgroundColor.substring(backgroundColor.lastIndexOf(",") + 2, backgroundColor.length - 1)), true);
+      previousInputColorDisplay.value = rgbToHex(parseInt(backgroundColor.substring(4,backgroundColor.indexOf(","))), parseInt(backgroundColor.substring(backgroundColor.indexOf(",") + 2, backgroundColor.lastIndexOf(","))), parseInt(backgroundColor.substring(backgroundColor.lastIndexOf(",") + 2, backgroundColor.length - 1)), true);
 
-  props.setState({colors: colors});
+      props.setState({colors: colors});
+    }
+  }
 }
 
-export function onPreviousPalette(props, i, ids) {
-  let colors = props.state.colors;
-  let new_colors = colors[i - 2];
-  let old_colors = colors[i - 1];
-
-  colors.splice(i - 2, 1, old_colors);
-  colors.splice(i - 1, 1, new_colors);
-
-  let nextDivColor = document.getElementById("div" + (i - 1));
-  let nextInputColorDisplay = document.getElementById("input" + (ids - 1));
-  let previousDivColor = document.getElementById("div" + i);
-  let previousInputColorDisplay = document.getElementById("input" + ids);
-
-  let backgroundColor = previousDivColor.style.backgroundColor;
-
-  nextInputColorDisplay.value = rgbToHex(parseInt(backgroundColor.substring(4,backgroundColor.indexOf(","))), parseInt(backgroundColor.substring(backgroundColor.indexOf(",") + 2, backgroundColor.lastIndexOf(","))), parseInt(backgroundColor.substring(backgroundColor.lastIndexOf(",") + 2, backgroundColor.length - 1)), true);
-
-  backgroundColor = nextDivColor.style.backgroundColor;
-
-  previousInputColorDisplay.value = rgbToHex(parseInt(backgroundColor.substring(4,backgroundColor.indexOf(","))), parseInt(backgroundColor.substring(backgroundColor.indexOf(",") + 2, backgroundColor.lastIndexOf(","))), parseInt(backgroundColor.substring(backgroundColor.lastIndexOf(",") + 2, backgroundColor.length - 1)), true);
-
-  props.setState({colors: colors});
+export function onPreviousPalette(props, props2, i, ids) {
+  if (props2.state.locked) {
+    alert("Pensez à déverouiller votre palette pour pouvoir la déplacer");
+  }
+  else {
+    let statePreviousLock = document.getElementById(`icon${props2.props.iconId - 1}`);
+    
+    if (statePreviousLock.getAttribute("data-icon") === "lock") {
+      alert("Pensez à déverouiller la palette de gauche pour pouvoir déplacer la palette actuelle");
+    }
+    else {
+      let colors = props.state.colors;
+      let new_colors = colors[i - 2];
+      let old_colors = colors[i - 1];
+      
+      colors.splice(i - 2, 1, old_colors);
+      colors.splice(i - 1, 1, new_colors);
+      
+      let nextDivColor = document.getElementById("div" + (i - 1));
+      let nextInputColorDisplay = document.getElementById("input" + (ids - 1));
+      let previousDivColor = document.getElementById("div" + i);
+      let previousInputColorDisplay = document.getElementById("input" + ids);
+      
+      let backgroundColor = previousDivColor.style.backgroundColor;
+      
+      nextInputColorDisplay.value = rgbToHex(parseInt(backgroundColor.substring(4,backgroundColor.indexOf(","))), parseInt(backgroundColor.substring(backgroundColor.indexOf(",") + 2, backgroundColor.lastIndexOf(","))), parseInt(backgroundColor.substring(backgroundColor.lastIndexOf(",") + 2, backgroundColor.length - 1)), true);
+      
+      backgroundColor = nextDivColor.style.backgroundColor;
+      
+      previousInputColorDisplay.value = rgbToHex(parseInt(backgroundColor.substring(4,backgroundColor.indexOf(","))), parseInt(backgroundColor.substring(backgroundColor.indexOf(",") + 2, backgroundColor.lastIndexOf(","))), parseInt(backgroundColor.substring(backgroundColor.lastIndexOf(",") + 2, backgroundColor.length - 1)), true);
+      
+      props.setState({colors: colors});
+    }
+  }
 }
