@@ -6,6 +6,16 @@ export function addPalette(props) {
   props.setState({colors: new_colors});
 }
 
+export function colorWithoutHash(color) {
+  if (color.includes('#')) {
+      let new_color = color.substring(1,color.length);
+      return new_color;
+  }
+  else {
+      return color;
+  }
+}
+
 export function rgbToHex(r, g, b, withoutHash) {
   let hex_color;
 
@@ -162,5 +172,36 @@ export function onPreviousPalette(props, props2, i, ids) {
       
       props.setState({colors: colors});
     }
+  }
+}
+
+export function changeColor(color, div, props, input) {
+  if (color.length < 6) {
+    return
+  }
+
+  let divColor = document.getElementById(`div${div}`);
+  let inputColor = document.getElementById(`input${input}`);
+
+  if (color.length === 6) {
+      color = "#" + color;
+      divColor?.style.setProperty("background-color", color);
+      inputColor.value = colorWithoutHash(color).toUpperCase();
+
+      let colors = props.state.colors;
+
+      colors.splice(div-1, 1, color);
+
+      props.setState({colors: colors});
+  }
+  else if (color.startsWith("#") && color.length === 7) {
+      divColor?.style.setProperty("background-color", color);
+      inputColor.value = colorWithoutHash(color).toUpperCase();
+
+      let colors = props.state.colors;
+
+      colors.splice(div-1, 1, color);
+
+      props.setState({colors: colors});
   }
 }

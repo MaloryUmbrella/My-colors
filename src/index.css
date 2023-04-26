@@ -182,3 +182,16 @@ code {
   position: relative;
   top: -12px;
 }
+
+.display-off {
+  opacity: 0%;
+}
+
+.colorinput {
+  z-index: 2;
+  width: 24px;
+  height: 24px;
+  border-radius: 125px;
+  position: absolute;
+  cursor: pointer;
+}

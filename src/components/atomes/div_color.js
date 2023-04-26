@@ -1,23 +1,13 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faLockOpen, faLock, faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { deletePalette, lockPalette, unlockPalette, rgbToHex, isFirst, isMiddle, isLast, onNextPalette, onPreviousPalette } from '../functions';
+import { faTrash, faLockOpen, faLock, faChevronRight, faChevronLeft, faPalette } from '@fortawesome/free-solid-svg-icons';
+import { deletePalette, lockPalette, unlockPalette, rgbToHex, isFirst, isMiddle, isLast, onNextPalette, onPreviousPalette, colorWithoutHash, changeColor } from '../functions';
 
 class DivColor extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             locked: false
-        }
-    }
-
-    colorWithoutHash = (color) => {
-        if (color.includes('#')) {
-            let new_color = color.substring(1,color.length);
-            return new_color;
-        }
-        else {
-            return color;
         }
     }
 
@@ -78,7 +68,7 @@ class DivColor extends React.Component {
                         <div className="swipe"> </div>
                     </div>
 	    		    <div className="color_tools">
-	    		    	<input className="input" type="text" id={`input${this.props.ids}`} defaultValue={this.colorWithoutHash(this.props.color)} onChange={(element) => this.changeColor(element.target.value, this.props.id, this.props.state)} />
+	    		    	<input className="input" type="text" id={`input${this.props.ids}`} defaultValue={colorWithoutHash(this.props.color)} onChange={(element) => this.changeColor(element.target.value, this.props.id, this.props.state)} />
 	    		    </div>
                 </div>
                 <div className="icons">
@@ -106,6 +96,10 @@ class DivColor extends React.Component {
                             ): null
                         ]
                     }
+                    <div className="btn btn-circle">
+                        <input type="color" className="colorinput display-off" onChange={(event) => changeColor(event.target.value, this.props.id, this.props.state, this.props.ids)}/>
+                        <FontAwesomeIcon color="#2CDEB0" icon={faPalette} size="lg" />
+                    </div>
                     <div className="btn btn-circle">
                         {
                             [
