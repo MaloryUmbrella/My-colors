@@ -1,1 +1,1 @@
-Bienvenue sur ce petit projet : My Colors ! (:
+**Bienvenue sur ce petit projet : My Colors ! (:**
