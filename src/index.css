@@ -220,3 +220,16 @@ code {
   right: 20px;
   position: relative;
 }
+
+.version-display {
+  float: left;
+  top: -55px;
+  left: 8px;
+  position: relative;
+  width: 160px;
+  height: 35px;
+  text-align: center;
+  background-color: #16E8B1;
+  cursor: default;
+  color: #000;
+}

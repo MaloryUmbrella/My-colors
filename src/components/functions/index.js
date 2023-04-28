@@ -305,3 +305,20 @@ function selectFile (contentType, multiple){
       input.click();
   });
 }
+
+export function randomColor(withoutHash) {
+  let color = "#";
+  let cars = "012356789ABCDEF";
+
+  for (let i = 0; i < 6; i ++) {
+    let random = Math.round(Math.random() * (cars.length - 1));
+
+    color += cars[random];
+  }
+
+  if (withoutHash) {
+    color.substring(1, color.length - 1);
+  }
+
+  return color
+}

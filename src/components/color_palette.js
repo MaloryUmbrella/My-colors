@@ -15,6 +15,11 @@ class ColorPalette extends React.Component {
     render() {
       return (
         <>
+          <div className="version-display">
+            {
+              "My Colors : V1.0.4"
+            }
+          </div>
           <div className="buttons-import-export">
             <FileHandler colors={this}/>
           </div>
