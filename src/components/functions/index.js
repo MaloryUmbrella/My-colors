@@ -1,9 +1,14 @@
+const FileSaver = require('file-saver');
+
 export function addPalette(props) {
   let new_colors = props.state.colors;
+  let new_locks = props.state.locked;
 
   new_colors.push("#000000");
+  new_locks.push(false);
 
   props.setState({colors: new_colors});
+  props.setState({locked: new_locks});
 }
 
 export function colorWithoutHash(color) {
@@ -38,8 +43,8 @@ export function rgbToHex(r, g, b, withoutHash) {
   return hex_color;
 }
 
-export function deletePalette(props, props2, i, ids) {
-  if (props2.state.locked) {
+export function deletePalette(props, i, ids) {
+  if (props.state.locked[i - 1]) {
     alert("Pensez à déverouiller votre palette pour pouvoir la supprimer");
   }
   else {
@@ -68,12 +73,16 @@ export function deletePalette(props, props2, i, ids) {
   }
 }
 
-export function lockPalette(props) {
-  props.setState({locked: true});
+export function lockPalette(props, id) {
+  let new_locks = props.state.state.locked;
+  new_locks[id - 1] = true;
+  props.state.setState({locked: new_locks});
 }
 
-export function unlockPalette(props) {
-  props.setState({locked: false});
+export function unlockPalette(props, id) {
+  let new_locks = props.state.state.locked;
+  new_locks[id - 1] = false;
+  props.state.setState({locked: new_locks});
 }
 
 export function isFirst(props, i) {
@@ -104,7 +113,7 @@ export function isLast(props, i) {
 }
 
 export function onNextPalette(props, props2, i, ids) {
-  if (props2.state.locked) {
+  if (props.state.locked[i - 1]) {
     alert("Pensez à déverouiller votre palette pour pouvoir la déplacer");
   }
   else {
@@ -140,7 +149,7 @@ export function onNextPalette(props, props2, i, ids) {
 }
 
 export function onPreviousPalette(props, props2, i, ids) {
-  if (props2.state.locked) {
+  if (props.state.locked[i - 1]) {
     alert("Pensez à déverouiller votre palette pour pouvoir la déplacer");
   }
   else {
@@ -204,4 +213,95 @@ export function changeColor(color, div, props, input) {
 
       props.setState({colors: colors});
   }
+}
+
+export function exportFile(colors) {
+  if (colors.length === 0) {
+    return
+  }
+  else {
+    let paletteList = [];
+
+    for (let i = 0; i < colors.length; i ++) {
+      let currentDivLock = document.getElementById(`icon${i + 1}`).getAttribute("data-icon");
+      let currentLock = false;
+      if (currentDivLock === "lock") {
+        currentLock = true;
+      }
+      paletteList.push([colors[i], currentLock]);
+    }
+
+    class Colors {
+      colors = [];
+    }
+
+    class color {
+      constructor(color, locked) {
+        this.color = color;
+        this.locked = locked;
+      }
+    }
+
+    let contenu = new Colors();
+
+    for (let b = 0; b < paletteList.length; b ++) {
+      let currentPalette = paletteList[b];
+      let colore = new color(currentPalette[0], currentPalette[1]);
+      contenu.colors.push(colore);
+    }
+
+    contenu = JSON.stringify(contenu, null, 2)
+
+    FileSaver.saveAs(new File([contenu], "colors.json"));
+
+    return
+  }
+}
+
+export async function importFile(props) {
+  return new Promise(async (resolve, reject) => {
+    let file = await selectFile(".json", true);
+    const fileReader = new FileReader();
+  
+    fileReader.addEventListener('load', (event) => {
+      let result = event.target.result;
+  
+      let content = JSON.parse(result);
+      
+      let new_colors = [];
+      let new_locks = [];
+  
+      for (let i = 0; i < content.colors.length; i ++) {
+        let current_palette = content.colors[i];
+        new_colors.push(current_palette['color']);
+        new_locks.push(current_palette['locked']);
+      }
+  
+      props.setState({colors: new_colors});
+      props.setState({locked: new_locks});
+
+      resolve(new_locks);
+    });
+  
+    fileReader.readAsText(file[0]);
+  });
+}
+
+function selectFile (contentType, multiple){
+  return new Promise(resolve => {
+      let input = document.createElement('input');
+      input.type = 'file';
+      input.multiple = multiple;
+      input.accept = contentType;
+
+      input.onchange = _ => {
+          let files = Array.from(input.files);
+          if (multiple)
+            resolve(files);
+          else
+            resolve(files[0]);
+      };
+
+      input.click();
+  });
 }

@@ -1,20 +1,25 @@
 import React from 'react';
 import DivRows from './atomes/div_rows';
+import FileHandler from './atomes/file_handler';
 import { addPalette } from './functions/index';
 
 class ColorPalette extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        colors: []
+        colors: [],
+        locked: []
       };
     }
   
     render() {
       return (
         <>
+          <div className="buttons-import-export">
+            <FileHandler colors={this}/>
+          </div>
           <div id="main_wrapper">
-              <DivRows colors={this.state.colors} event={() => addPalette(this)} state={this}/>
+            <DivRows colors={this.state.colors} event={() => addPalette(this)} state={this}/>
           </div>
         </>
       );

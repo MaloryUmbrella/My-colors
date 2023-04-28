@@ -4,13 +4,6 @@ import { faTrash, faLockOpen, faLock, faChevronRight, faChevronLeft, faPalette }
 import { deletePalette, lockPalette, unlockPalette, rgbToHex, isFirst, isMiddle, isLast, onNextPalette, onPreviousPalette, colorWithoutHash, changeColor } from '../functions';
 
 class DivColor extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            locked: false
-        }
-    }
-
     changeColor = (color, div, props) => {
         if (color.length < 6) {
             return
@@ -82,7 +75,7 @@ class DivColor extends React.Component {
                             isMiddle(this.props.state, this.props.id - 1) === true ? (
                                 <>
                                     <div className="btn btn-circle">
-                                        <FontAwesomeIcon icon={faChevronRight} size="lg" onClick={() => onNextPalette(this.props.state, this, this.props.id, this.props.ids, this)}/>
+                                        <FontAwesomeIcon icon={faChevronRight} size="lg" onClick={() => onNextPalette(this.props.state, this, this.props.id, this.props.ids)}/>
                                     </div>
                                     <div className="btn btn-circle">
                                         <FontAwesomeIcon icon={faChevronLeft} size="lg" onClick={() => onPreviousPalette(this.props.state, this, this.props.id, this.props.ids)}/>
@@ -103,17 +96,17 @@ class DivColor extends React.Component {
                     <div className="btn btn-circle">
                         {
                             [
-                                this.state.locked === true ? (
-                                    <FontAwesomeIcon icon={faLock} color="#B9B9B9" id={`icon${this.props.iconId}`} size="lg" onClick={() => unlockPalette(this)}/>
+                                this.props.state.state.locked[this.props.id - 1] === true ? (
+                                    <FontAwesomeIcon icon={faLock} color="#B9B9B9" id={`icon${this.props.iconId}`} size="lg" onClick={() => unlockPalette(this.props, this.props.id)}/>
                                 ): null,
-                                this.state.locked === false ? (
-                                    <FontAwesomeIcon icon={faLockOpen} color="#B9B9B9" id={`icon${this.props.iconId}`} size="lg" onClick={() => lockPalette(this)}/>
+                                this.props.state.state.locked[this.props.id - 1] === false ? (
+                                    <FontAwesomeIcon icon={faLockOpen} color="#B9B9B9" id={`icon${this.props.iconId}`} size="lg" onClick={() => lockPalette(this.props, this.props.id)}/>
                                 ): null
                             ]
                         }
                     </div>
                     <div className="btn btn-circle trashcan">
-                        <FontAwesomeIcon icon={faTrash} color="#DE2121" size="lg" onClick={() => deletePalette(this.props.state, this, this.props.id, this.props.ids)}/>
+                        <FontAwesomeIcon icon={faTrash} color="#DE2121" size="lg" onClick={() => deletePalette(this.props.state, this.props.id, this.props.ids)}/>
                     </div>
                 </div>
 	    	</div>
