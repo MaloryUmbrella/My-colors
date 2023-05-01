@@ -1,7 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faLockOpen, faLock, faChevronRight, faChevronLeft, faPalette } from '@fortawesome/free-solid-svg-icons';
-import { deletePalette, lockPalette, unlockPalette, rgbToHex, isFirst, isMiddle, isLast, onNextPalette, onPreviousPalette, colorWithoutHash, changeColor } from '../functions';
+import { faTrash, faLockOpen, faLock, faChevronRight, faChevronLeft, faPalette, faDice } from '@fortawesome/free-solid-svg-icons';
+import { deletePalette, lockPalette, unlockPalette, rgbToHex, isFirst, isMiddle, isLast, onNextPalette, onPreviousPalette, colorWithoutHash, changeColor, generateRandomPalette } from '../functions';
 
 class DivColor extends React.Component {
     changeColor = (color, div, props) => {
@@ -92,6 +92,9 @@ class DivColor extends React.Component {
                     <div className="btn btn-circle">
                         <input type="color" className="colorinput display-off" onChange={(event) => changeColor(event.target.value, this.props.id, this.props.state, this.props.ids)}/>
                         <FontAwesomeIcon color="#2CDEB0" icon={faPalette} size="lg" />
+                    </div>
+                    <div className="btn btn-circle">
+                        <FontAwesomeIcon color="#B1255D" icon={faDice} size="lg" onClick={(event) => generateRandomPalette(event.currentTarget, this.props.id, this.props.state, this.props.ids)}/>
                     </div>
                     <div className="btn btn-circle">
                         {

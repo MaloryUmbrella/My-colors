@@ -326,3 +326,15 @@ export function randomColor(withoutHash) {
 
   return color
 }
+
+export function generateRandomPalette(target, div, props, input) {
+  let new_color = randomColor(false);
+
+  target.classList.add("fa-bounce");
+  
+  changeColor(new_color, div, props, input);
+
+  setTimeout(function() {
+    target.classList.remove("fa-bounce");
+  }, 800);
+}
