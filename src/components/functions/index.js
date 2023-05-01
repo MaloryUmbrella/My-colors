@@ -216,19 +216,20 @@ export function changeColor(color, div, props, input) {
 }
 
 export function exportFile(colors) {
-  if (colors.length === 0) {
+  if (colors.state.colors.length === 0) {
     return
   }
   else {
     let paletteList = [];
+    let colors2 = colors.state.colors;
 
-    for (let i = 0; i < colors.length; i ++) {
+    for (let i = 0; i < colors2.length; i ++) {
       let currentDivLock = document.getElementById(`icon${i + 1}`).getAttribute("data-icon");
       let currentLock = false;
       if (currentDivLock === "lock") {
         currentLock = true;
       }
-      paletteList.push([colors[i], currentLock]);
+      paletteList.push([colors2[i], currentLock]);
     }
 
     class Colors {
@@ -250,7 +251,7 @@ export function exportFile(colors) {
       contenu.colors.push(colore);
     }
 
-    contenu = JSON.stringify(contenu, null, 2)
+    contenu = JSON.stringify(contenu, null, 2);
 
     FileSaver.saveAs(new File([contenu], "colors.json"));
 
@@ -262,25 +263,28 @@ export async function importFile(props) {
   return new Promise(async (resolve, reject) => {
     let file = await selectFile(".json", true);
     const fileReader = new FileReader();
-  
+    
     fileReader.addEventListener('load', (event) => {
-      let result = event.target.result;
-  
-      let content = JSON.parse(result);
+      try {
+        let result = event.target.result;
+    
+        let content = JSON.parse(result);
+        let new_colors = [];
+        let new_locks = [];
+        
+        for (let i = 0; i < content.colors.length; i ++) {
+          let current_palette = content.colors[i];
+          new_colors.push(current_palette['color']);
+          new_locks.push(current_palette['locked']);
+        }
       
-      let new_colors = [];
-      let new_locks = [];
-  
-      for (let i = 0; i < content.colors.length; i ++) {
-        let current_palette = content.colors[i];
-        new_colors.push(current_palette['color']);
-        new_locks.push(current_palette['locked']);
+        props.setState({colors: new_colors});
+        props.setState({locked: new_locks});
+        resolve(new_locks);
       }
-  
-      props.setState({colors: new_colors});
-      props.setState({locked: new_locks});
-
-      resolve(new_locks);
+      catch ( Error ) {
+        alert("Il semblerait qu'il y est un problème d'importation. Pensez à indiquer le bon fichier pour importer vos palettes.");
+      }
     });
   
     fileReader.readAsText(file[0]);
