@@ -17,7 +17,7 @@ class ColorPalette extends React.Component {
         <>
           <div className="version-display">
             {
-              "My Colors : V1.0.4"
+              "My Colors : V1.0.5"
             }
           </div>
           <div className="buttons-import-export">

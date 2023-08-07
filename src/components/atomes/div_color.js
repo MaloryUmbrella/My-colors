@@ -1,7 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faLockOpen, faLock, faChevronRight, faChevronLeft, faPalette, faDice } from '@fortawesome/free-solid-svg-icons';
-import { deletePalette, lockPalette, unlockPalette, rgbToHex, isFirst, isMiddle, isLast, onNextPalette, onPreviousPalette, colorWithoutHash, changeColor, generateRandomPalette } from '../functions';
+import { deletePalette, lockPalette, unlockPalette, isFirst, isMiddle, isLast, onNextPalette, onPreviousPalette, colorWithoutHash, changeColor, generateRandomPalette, converter } from '../functions';
 
 class DivColor extends React.Component {
     changeColor = (color, div, props) => {
@@ -32,20 +32,12 @@ class DivColor extends React.Component {
         }
     }
 
-    copyColor = (div) => {
-        let divColor = document.getElementById(`div${div}`);
+    copyColor = (input) => {
+        let inputColor = document.getElementById(`input${input}`);
 
-        let color = divColor.style.getPropertyValue("background-color");
+        let color = inputColor.value;
 
-        let color_to_hex = rgbToHex(parseInt(color.substring(4,color.indexOf(","))), parseInt(color.substring(color.indexOf(",") + 2, color.lastIndexOf(","))), parseInt(color.substring(color.lastIndexOf(",") + 2, color.length - 1)), true);
-
-        if (color_to_hex === "000") {
-            color_to_hex = "000000";
-        }
-
-        color_to_hex = color_to_hex.toUpperCase();
-
-        navigator.clipboard.writeText(color_to_hex).then(function() {
+        navigator.clipboard.writeText(color).then(function() {
                 alert("La couleur a bien été copiée dans le presse papier");
             }, function() {
                 alert("La couleur n'a pas pu être copiée dans le presse papier");
@@ -57,7 +49,7 @@ class DivColor extends React.Component {
         return (
             <div className="col-md-15 color_wrapper">
 	    		<div>
-                    <div className="color" style={{ backgroundColor: this.props.color }} id={`div${this.props.id}`} data-color={this.props.color} onClick={() => this.copyColor(this.props.id)}>
+                    <div className="color" style={{ backgroundColor: this.props.color }} id={`div${this.props.id}`} data-color={this.props.color} onClick={() => this.copyColor(this.props.ids)}>
                         <div className="swipe"> </div>
                     </div>
 	    		    <div className="color_tools">
@@ -93,7 +85,7 @@ class DivColor extends React.Component {
                         <input type="color" className="colorinput display-off" onChange={(event) => changeColor(event.target.value, this.props.id, this.props.state, this.props.ids)}/>
                         <FontAwesomeIcon color="#2CDEB0" icon={faPalette} size="lg" />
                     </div>
-                    <div className="btn btn-circle">
+                    <div className="btn btn-circle dice">
                         <FontAwesomeIcon color="#B1255D" icon={faDice} size="lg" onClick={(event) => generateRandomPalette(event.currentTarget, this.props.id, this.props.state, this.props.ids)}/>
                     </div>
                     <div className="btn btn-circle">
@@ -107,6 +99,13 @@ class DivColor extends React.Component {
                                 ): null
                             ]
                         }
+                    </div>
+                </div>
+                <div className="icons2">
+                    <div className="btn btn-circle color-format">
+                        <span onClick={(element) => converter(element.currentTarget, this.props.ids)}>
+                            HEX
+                        </span>
                     </div>
                     <div className="btn btn-circle trashcan">
                         <FontAwesomeIcon icon={faTrash} color="#DE2121" size="lg" onClick={() => deletePalette(this.props.state, this.props.id, this.props.ids)}/>
