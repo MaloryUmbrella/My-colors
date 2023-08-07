@@ -498,8 +498,6 @@ export function randomColor(withoutHash) {
 export function generateRandomPalette(target, div, props, input) {
   let new_color = randomColor(false);
 
-  console.log(props.state.locked[div - 1]);
-
   if (props.state.locked[div - 1]) {
     alert("Pensez à déverouiller votre palette pour pouvoir générer une couleur aléatoirement");
 
