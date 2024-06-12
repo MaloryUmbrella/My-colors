@@ -82,7 +82,7 @@ class DivColor extends React.Component {
                         ]
                     }
                     <div className="btn btn-circle">
-                        <input type="color" className="colorinput display-off" onChange={(event) => changeColor(event.target.value, this.props.id, this.props.state, this.props.ids)}/>
+                        <input type="color" className="colorinput display-off" defaultValue={this.props.color} onChange={(event) => changeColor(event.target.value, this.props.id, this.props.state, this.props.ids)}/>
                         <FontAwesomeIcon color="#2CDEB0" icon={faPalette} size="lg" />
                     </div>
                     <div className="btn btn-circle dice">
@@ -103,7 +103,7 @@ class DivColor extends React.Component {
                 </div>
                 <div className="icons2">
                     <div className="btn btn-circle color-format">
-                        <span onClick={(element) => converter(element.currentTarget, this.props.ids)}>
+                        <span id={`colorFormat-${this.props.id}`} onClick={(element) => converter(element.currentTarget, this.props.ids)}>
                             HEX
                         </span>
                     </div>
